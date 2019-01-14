@@ -3,7 +3,7 @@
 
 ## Lab - Migrating Legacy JEE apps to IBM Cloud Private
 
-### Part 2 Creating a CI/CD Pipeline for deployment to IBM Cloud Private using Jenkins
+### Part 2 -  Creating a CI/CD Pipeline for deployment to IBM Cloud Private using Jenkins
 
 ## Overview
 
@@ -25,7 +25,6 @@ In this lab you will  be connecting a Git repository to a Continuous Integration
    helm install --name liberty-starter-[uname] chart/liberty-starter --tls
 ```   
 
-
 ###  Step 1: Set up the  CI/CD pipeline
 
 In this section we will be connecting our cloned Git repo of [this app](https://github.com/djccarew/app-modernization-legacy-jee-app)  to set up a Continuous Integration/Continuous Deployment pipeline built with Jenkins. This pipeline contains 4 different steps as follows:
@@ -37,7 +36,7 @@ In this section we will be connecting our cloned Git repo of [this app](https://
   | Push Docker Image to Registry | Uploads the Docker image to the Docker image registry within ICP             |
   | Deploy New Docker Image       | Updates the image tag in the Kubernetes deployment triggering a rolling update |
 
-More details of this pipeline can be found in the [Jenkinsfile](./changeme).
+More details of this pipeline can be found in the [Jenkinsfile](https://raw.githubusercontent.com/djccarew/app-modernization-legacy-jee-app/master/Jenkinsfile).
 
 1. Log into Jenkins using the URL provided to you by your instructor with the credentials provided to you
 
@@ -71,14 +70,14 @@ More details of this pipeline can be found in the [Jenkinsfile](./changeme).
 
 ![End of console output](images/ss5.png)
 
-&nbsp;&nbsp;&nbsp;The Stage View of the pipeline should look like the following:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Stage View of the pipeline should look like the following:
 ![Stage view](images/stages.png)
 
 ### Step 4: Trigger a build via a commit to Github
 
 Now you'll configure Github to trigger your pipeline whenever code is committed.
 
-1. Go back to Github and find your cloned repository (i.e https://github.com/<your username>/app-modernization-legacy-jee-app)
+1. Go back to Github and find your cloned repository
 
 2. Click on the repository settings
 
