@@ -1,12 +1,13 @@
 
 # IBM Client Developer Advocacy App Modernization Series
 
-## Lab - Migrating Legacy JEE apps to IBM Cloud Private - Part 2 Creating a CI/CD Pipeline for deployment to IBM Cloud Private using Jenkins
+## Lab - Migrating Legacy JEE apps to IBM Cloud Private
+
+### Part 2 Creating a CI/CD Pipeline for deployment to IBM Cloud Private using Jenkins
 
 ## Overview
 
 In this lab you will  be connecting a Git repository to a Continuous Integration/Continuous Deployment pipeline built with Jenkins on IBM Cloud Private.
-The app in the Git repo  is a modified version of the code for [Getting started tutorial for Liberty](https://console.bluemix.net/docs/runtimes/liberty/getting-started.html#getting-started-tutorial).
 
 ## Prerequisites
 
@@ -70,7 +71,7 @@ More details of this pipeline can be found in the [Jenkinsfile](./changeme).
 
 ![End of console output](images/ss5.png)
 
-   The Stage View of the pipeline should look like the following:
+&nbsp;&nbsp;&nbsp;The Stage View of the pipeline should look like the following:
 ![Stage view](images/stages.png)
 
 ### Step 4: Trigger a build via a commit to Github
