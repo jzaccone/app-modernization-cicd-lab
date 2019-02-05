@@ -55,7 +55,7 @@ More details of this pipeline can be found in the [Jenkinsfile](https://raw.gith
 
 6. For **Repository URL** enter the url to the cloned repository that you forked earlier (i.e. https://github.com/<your username>/app-modernization-plants-by-websphere-jee6.git)
 
-7. Uncheck **Lightweight checkout***.
+7. Uncheck **Lightweight checkout**.
 
 ![pipeline config](images/ss3.png)
 
@@ -90,7 +90,7 @@ Now you'll configure Github to trigger your pipeline whenever code is committed.
 
 ![Add webhook](images/ss7.png)
 
-4. For the Payload URL use **<Jenkins URL>/github-webhook/**  where *<Jenkins URL>* is the  URL you used  to login to Jenkins (**Note** Don't forget the trailing **/**)
+4. For the Payload URL use *<Jenkins URL>/github-webhook/*  where *<Jenkins URL>* is the  URL you used  to login to Jenkins (**Note** Don't forget the trailing **/**)
 
 5. Change content type to **application/json**
 
@@ -102,7 +102,7 @@ Now you'll configure Github to trigger your pipeline whenever code is committed.
 
 8. Click on the pencil icon to edit **promo.xhtml**  and on line 95 locate the price of the Bonsai Tree
 
-9. Change the `$30.00` to `<strike>$30.00</strike> $25.00`
+9. Change the `$30.00 each` to `<strike>$30.00</strike> $25.00 each`
 
 This will show the price of the Bonsai Tree as being reduced even more
 
