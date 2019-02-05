@@ -9,25 +9,39 @@
 
 In this lab you will  be connecting a Git repository to a Continuous Integration/Continuous Deployment pipeline built with Jenkins on IBM Cloud Private.
 
+## Setup
+
+If you haven't already:
+
+1. Login to the VM designated as the client env to ICP using the credentials  provided  to you
+
+2. From a  client  terminal window log in to the ICP Cluster with the following command:
+```
+    cloudctl login -a [ICP Master IP]:8443 --skip-ssl-validation
+```
 ## Prerequisites
 
-**Note:** If you've already completed [Part 1 Working with Helm](https://github.com/djccarew/app-modernization-helm-lab) you can proceed to Step 1
+**Note:** If you've already completed [Part 2 Working with Helm](https://github.com/djccarew/app-modernization-helm-lab) you can proceed to Step 1
 
 1. From a command line prompt issue the following commands to deploy the app
 
 ```
    # Clone the repo
-   git clone https://github.com/djccarew/app-modernization-legacy-jee-app.git
+   git clone https://github.com/djccarew/app-modernization-plants-by-websphere-jee6.git
    cd app-modernization-legacy-jee-app
+
+   # Fetch required MariaDB chart
+   helm repo add ibmcom https://raw.githubusercontent.com/IBM/charts/master/repo/stable
+   helm dependency update chart/pbw-liberty-mariadb
 
    # Deploy the app
    # Substitute your username for [uname] (eg user04)
-   helm install --name liberty-starter-[uname] chart/liberty-starter --tls
+   helm install --name pbw-liberty-mariadb-[uname] chart/liberty-starter --tls
 ```   
 
-###  Step 1: Set up the  CI/CD pipeline
+###  Step 1: Set up the CI/CD pipeline
 
-In this section we will be connecting our cloned Git repo of [this app](https://github.com/djccarew/app-modernization-legacy-jee-app)  to set up a Continuous Integration/Continuous Deployment pipeline built with Jenkins. This pipeline contains 4 different steps as follows:
+In this section we will be connecting our cloned Git repo of [this app](https://github.com/djccarew/app-modernization-plants-by-websphere-jee6)  to set up a Continuous Integration/Continuous Deployment pipeline built with Jenkins. This pipeline contains 4 different steps as follows:
 
   | Stage                         | Purpose                                                                        |
   | ----------------------------- | ------------------------------------------------------------------------------ |
@@ -36,7 +50,7 @@ In this section we will be connecting our cloned Git repo of [this app](https://
   | Push Docker Image to Registry | Uploads the Docker image to the Docker image registry within ICP             |
   | Deploy New Docker Image       | Updates the image tag in the Kubernetes deployment triggering a rolling update |
 
-More details of this pipeline can be found in the [Jenkinsfile](https://raw.githubusercontent.com/djccarew/app-modernization-legacy-jee-app/master/Jenkinsfile).
+More details of this pipeline can be found in the [Jenkinsfile](https://raw.githubusercontent.com/djccarew/app-modernization-plants-by-websphere-jee6/master/Jenkinsfile).
 
 1. Log into Jenkins using the URL provided to you by your instructor with the credentials provided to you
 
@@ -52,7 +66,7 @@ More details of this pipeline can be found in the [Jenkinsfile](https://raw.gith
 
 5. Scroll down to the **Pipeline** section and find the **Definition** drop down menu. Select **Pipeline script from SCM** and for **SCM** select **Git**.
 
-6. For **Repository URL** enter the url to the cloned repository that you forked earlier (i.e. https://github.com/<your username>/app-modernization-legacy-jee-app.git)
+6. For **Repository URL** enter the url to the cloned repository that you forked earlier (i.e. https://github.com/<your username>/app-modernization-plants-by-websphere-jee6.git)
 
 7. Ensure the **/master** branch is being targeted and click **Save**.
 
