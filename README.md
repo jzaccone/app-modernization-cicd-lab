@@ -13,30 +13,17 @@ In this lab you will  be connecting a Git repository to a Continuous Integration
 
 If you haven't already:
 
-1. Login to the VM designated as the client env to ICP using the credentials  provided  to you
+1. Complete *Part 2 -  Working with Helm*  by following the instructions [here](https://github.com/djccarew/app-modernization-helm-lab)
 
-2. From a  client  terminal window log in to the ICP Cluster with the following command:
+2. Login to the VM designated as the client env to ICP using the credentials  provided  to you
+
+3. From a  client  terminal window log in to the ICP Cluster with the following command:
 ```
-    cloudctl login -a [ICP Master IP]:8443 --skip-ssl-validation
+    cloudctl login -a https://[ICP Master IP]:8443 --skip-ssl-validation
 ```
-## Prerequisites
-
-**Note:** If you've already completed [Part 2 Working with Helm](https://github.com/djccarew/app-modernization-helm-lab) you can proceed to Step 1
-
-1. From a command line prompt issue the following commands to deploy the app
-
+4. Go to the folder where you cloned the Plants By WebSphere  app in the previous lab
 ```
-   # Clone the repo
-   git clone https://github.com/djccarew/app-modernization-plants-by-websphere-jee6.git
-   cd app-modernization-legacy-jee-app
-
-   # Fetch required MariaDB chart
-   helm repo add ibmcom https://raw.githubusercontent.com/IBM/charts/master/repo/stable
-   helm dependency update chart/pbw-liberty-mariadb
-
-   # Deploy the app
-   # Substitute your username for [uname] (eg user04)
-   helm install --name pbw-liberty-mariadb-[uname] chart/pbw-liberty-mariadb --tls
+   cd app-modernization-plants-by-websphere-jee6
 ```   
 
 ###  Step 1: Set up the CI/CD pipeline
@@ -68,9 +55,11 @@ More details of this pipeline can be found in the [Jenkinsfile](https://raw.gith
 
 6. For **Repository URL** enter the url to the cloned repository that you forked earlier (i.e. https://github.com/<your username>/app-modernization-plants-by-websphere-jee6.git)
 
-7. Ensure the **/master** branch is being targeted and click **Save**.
+7. Uncheck **Lightweight checkout***.
 
 ![pipeline config](images/ss3.png)
+
+8. Click **Save**.
 
 ### Step 3: Manually trigger a build to test pipeline
 
@@ -101,7 +90,7 @@ Now you'll configure Github to trigger your pipeline whenever code is committed.
 
 ![Add webhook](images/ss7.png)
 
-4. For the Payload URL use <Jenkins URL>/github-webhook/  where <Jenkins URL> is the  URL you used  to login to Jenkins (**Note** Don't forget the trailing /)
+4. For the Payload URL use **<Jenkins URL>/github-webhook/**  where *<Jenkins URL>* is the  URL you used  to login to Jenkins (**Note** Don't forget the trailing **/**)
 
 5. Change content type to **application/json**
 
@@ -109,18 +98,15 @@ Now you'll configure Github to trigger your pipeline whenever code is committed.
 
 ![Add webhook](images/ss8.png)
 
-7. In the Github file browser drill down to src/main/webapp/index.html
+7. In the Github file browser drill down to *pbw-web/src/main/webapp/promo.xhtml*
 
-8. Click on the pencil icon to edit index.html  and on line 2 locate the **\<html lang="en">** tag.
+8. Click on the pencil icon to edit **promo.xhtml**  and on line 95 locate the price of the Bonsai Tree
 
-9. Change the **"en"** to one of the following:
+9. Change the `$30.00` to `<strike>$30.00</strike> $25.00`
 
-- es: Spanish
-- pt: Portuguese
-- fr: French
-- ja: Japanese
+This will show the price of the Bonsai Tree as being reduced even more
 
-This will change the language that loads on the webpage to whatever language you selected.
+![Reduce Bonsai price](images/ss10.png)
 
 10. At the bottom of the UI window add a commit message and click on **Commit changes**
 
@@ -134,9 +120,9 @@ This will change the language that loads on the webpage to whatever language you
 
 15. Look for your Helm release in the list and click on the **Launch** link on the right.
 
-16. Verify that the app's UI opens in another tab and the language matches the one you selected.
+16. Verify that the app's UI opens in another tab and the price of the Bonsai tree has been reduced.
 
-![Language changed](images/ss9.png)
+![Price reduced](images/ss9.png)
 
 ## Summary
 You created a Jenkins pipeline to automatically build and deploy an app that has been updated in Github .
