@@ -90,7 +90,7 @@ Now you'll configure Github to trigger your pipeline whenever code is committed.
 
 ![Add webhook](images/ss7.png)
 
-4. For the Payload URL use *<Jenkins URL>/github-webhook/*  where *<Jenkins URL>* is the  URL you used  to login to Jenkins (**Note** Don't forget the trailing **/**)
+4. For the Payload URL use `<Jenkins URL>/github-webhook/`  where `<Jenkins URL>` is the  URL you used  to login to Jenkins (**Note** Don't forget the trailing `/`)
 
 5. Change content type to **application/json**
 
