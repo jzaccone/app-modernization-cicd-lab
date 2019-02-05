@@ -3,7 +3,7 @@
 
 ## Lab - Migrating Legacy JEE apps to IBM Cloud Private
 
-### Part 2 -  Creating a CI/CD Pipeline for deployment to IBM Cloud Private using Jenkins
+### Part 3 -  Creating a CI/CD Pipeline for deployment to IBM Cloud Private using Jenkins
 
 ## Overview
 
@@ -36,7 +36,7 @@ If you haven't already:
 
    # Deploy the app
    # Substitute your username for [uname] (eg user04)
-   helm install --name pbw-liberty-mariadb-[uname] chart/liberty-starter --tls
+   helm install --name pbw-liberty-mariadb-[uname] chart/pbw-liberty-mariadb --tls
 ```   
 
 ###  Step 1: Set up the CI/CD pipeline
