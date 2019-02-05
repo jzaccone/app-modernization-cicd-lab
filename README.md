@@ -53,7 +53,7 @@ More details of this pipeline can be found in the [Jenkinsfile](https://raw.gith
 
 5. Scroll down to the **Pipeline** section and find the **Definition** drop down menu. Select **Pipeline script from SCM** and for **SCM** select **Git**.
 
-6. For **Repository URL** enter the url to the cloned repository that you forked earlier (i.e. https://github.com/<your username>/app-modernization-plants-by-websphere-jee6.git)
+6. For **Repository URL** enter the url to the cloned repository that you forked earlier (i.e. `https://github.com/[your username]/app-modernization-plants-by-websphere-jee6.git`)
 
 7. Uncheck **Lightweight checkout**.
 
