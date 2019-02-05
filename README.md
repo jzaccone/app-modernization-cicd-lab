@@ -7,7 +7,7 @@
 
 ## Overview
 
-In this lab you will  be connecting a Git repository to a Continuous Integration/Continuous Deployment pipeline built with Jenkins on IBM Cloud Private.
+In this lab you will  be connecting yout Git repository with the Plants by WebSphere app to a Continuous Integration/Continuous Deployment pipeline built with Jenkins on IBM Cloud Private.
 
 ## Setup
 
@@ -102,7 +102,7 @@ Now you'll configure Github to trigger your pipeline whenever code is committed.
 
 8. Click on the pencil icon to edit **promo.xhtml**  and on line 95 locate the price of the Bonsai Tree
 
-9. Change the `$30.00 each` to `<strike>$30.00</strike> $25.00 each`
+9. Change  `$30.00 each` to `<strike>$30.00</strike> $25.00 each`
 
 This will show the price of the Bonsai Tree as being reduced even more
 
