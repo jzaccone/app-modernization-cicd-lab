@@ -3,41 +3,52 @@
 
 ## Lab - Migrating Legacy JEE apps to IBM Cloud Private
 
-### Part 3 -  Creating a CI/CD Pipeline for deployment to IBM Cloud Private using Jenkins
+### Part 2 -  Creating a CI/CD Pipeline for deployment to IBM Cloud Kubernetes Service using Jenkins
 
 ## Overview
 
-In this lab you will  be connecting yout Git repository with the Plants by WebSphere app to a Continuous Integration/Continuous Deployment pipeline built with Jenkins on IBM Cloud Private.
+In this lab you will  be connecting yout Git repository with the Plants by WebSphere app to a Continuous Integration/Continuous Deployment pipeline built with Jenkins that will deploy to a IBM Cloud Kubernetes Service cluster.
 
 ## Setup
 
 If you haven't already:
 
-1. Complete *Part 2 -  Working with Helm*  by following the instructions [here](https://github.com/djccarew/app-modernization-helm-lab)
+1. Complete *Part 1 -  Working with Helm*  by following the instructions [here](https://github.com/djccarew/app-modernization-helm-lab/tree/iks)
 
-2. Login to the VM designated as the client env to ICP using the credentials  provided  to you
-
-3. From a  client  terminal window log in to the ICP Cluster with the following command:
+2. From a  client  terminal window log in to the IBM Cloud Kubernetes Service  with your IBM Cloud credentials using the following command:
 ```
-    cloudctl login -a https://[ICP Master IP]:8443 --skip-ssl-validation
+    ibmcloud  login -a https://api.us-east.bluemix.net
 ```
-4. Go to the folder where you cloned the Plants By WebSphere  app in the previous lab
+3. Target the Kubernetes Service region
+```
+   ibmcloud ks cluster-config
+```
+4. Get the command to set the environment variable and download the Kubernetes configuration files. Substitute you cluster's name for *[YOUR CLUSTER]*
+```bash
+   # Note substitute your username e.g. user05 for  [YOUR_USERNAME]
+   ibmcloud ks cluster-config [YOUR_USERNAME]-cluster
+```
+5.  Set the KUBECONFIG environment variable. Copy the output from the previous command, paste it in your terminal and then run it as a command. The output from the previous command should look similar to the following.
+```
+   export KUBECONFIG=/...-cluster.yaml
+```
+6. Go to the folder where you cloned the Plants By WebSphere  app in the previous lab
 ```
    cd app-modernization-plants-by-websphere-jee6
 ```   
 
 ###  Step 1: Set up the CI/CD pipeline
 
-In this section we will be connecting our cloned Git repo of [this app](https://github.com/djccarew/app-modernization-plants-by-websphere-jee6)  to set up a Continuous Integration/Continuous Deployment pipeline built with Jenkins. This pipeline contains 4 different steps as follows:
+In this section we will be connecting our cloned Git repo of [this app](https://github.com/djccarew/app-modernization-plants-by-websphere-jee6)  to set up a Continuous Integration/Continuous Deployment pipeline built with Jenkins. This pipeline contains 4main  steps as follows:
 
   | Stage                         | Purpose                                                                        |
   | ----------------------------- | ------------------------------------------------------------------------------ |
-  | Build Application War File    | Pulls in dependencies from Maven and packages application into .war file       |
+  | Build Application ear File    | Pulls in dependencies from Maven and packages application into .ear file       |
   | Build Docker Image            | Builds the Docker image based on the Dockerfile                                |
-  | Push Docker Image to Registry | Uploads the Docker image to the Docker image registry within ICP             |
+  | Push Docker Image to Registry | Uploads the Docker image to the Docker image registry within ICP               |
   | Deploy New Docker Image       | Updates the image tag in the Kubernetes deployment triggering a rolling update |
 
-More details of this pipeline can be found in the [Jenkinsfile](https://raw.githubusercontent.com/djccarew/app-modernization-plants-by-websphere-jee6/master/Jenkinsfile).
+More details of this pipeline can be found in the [Jenkinsfile](https://raw.githubusercontent.com/djccarew/app-modernization-plants-by-websphere-jee6/master/Jenkinsfile.ext).
 
 1. Log into Jenkins using the URL provided to you by your instructor with the credentials provided to you
 
@@ -55,7 +66,8 @@ More details of this pipeline can be found in the [Jenkinsfile](https://raw.gith
 
 6. For **Repository URL** enter the url to the cloned repository that you forked earlier (i.e. `https://github.com/[your username]/app-modernization-plants-by-websphere-jee6.git`)
 
-7. Uncheck **Lightweight checkout**.
+7. Chnage the **Script Path** to `Jenkinsfile.ext`
+
 
 ![pipeline config](images/ss3.png)
 
@@ -114,15 +126,33 @@ This will show the price of the Bonsai Tree as being reduced even more
 
 12. Verify that your pipeline  starts building.
 
-13. When the pipeline is finish deploying, launch the IBM Cloud Private Web UI using the URL given to you by your instructor and login in.
+13. When the pipeline is finish deploying, launch the app to verify the change you made.
 
-14. In the Navigation area on the left expand **Workloads** and select **Helm Releases**
+14.Run the following command to get the port number of your deployed app
+```
+   kubectl --namespace default get service pbw-liberty-mariadb-liberty -o jsonpath='{.spec.ports[0].nodePort}'
+```
 
-15. Look for your Helm release in the list and click on the **Launch** link on the right.
+15. Run the following command to get the external IP address  of the first worker node in your cluster
+```bash
+   # Substitute your cluster name e.g. user05-cluster for [YOUR_CLUSTER_NAME]
+   ibmcloud cs workers [YOUR_CLUSTER_NAME] | grep -v '^*' | egrep -v "(ID|OK)" | awk '{print $2;}' | head -n1
+```
+16. Your app's URL is the IP address of the first worker node with the port number of the deployed app. For example if your external IP is 169.61.73.182 and the port is 30961 the URL will be ```http://169.61.73.182:30961```
 
-16. Verify that the app's UI opens in another tab and the price of the Bonsai tree has been reduced.
+17. Enter the URL in hr browser's address bar and verify that the price of the Bonsai tree has been reduced.
 
 ![Price reduced](images/ss9.png)
+
+## Cleanup
+
+Free up resources for subsequent labs by deleting the Plants by Websphere app.
+
+1. Run the following command to delete the app
+```
+   helm delete --purge pbw-liberty-mariadb
+```
+
 
 ## Summary
 You created a Jenkins pipeline to automatically build and deploy an app that has been updated in Github .
