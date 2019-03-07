@@ -11,35 +11,18 @@ In this lab you will  be connecting your Git repository with the Plants by WebSp
 
 ## Setup
 
-If you haven't already:
-
 1. Complete *Part 1 -  Working with Helm*  by following the instructions [here](https://github.com/djccarew/app-modernization-helm-lab/tree/iks)
 
-2. From a  client  terminal window log in to the IBM Cloud Kubernetes Service  with your IBM Cloud credentials using the following command:
-```
-    ibmcloud  login -a https://api.us-east.bluemix.net
-```
-3. Target the Kubernetes Service region
-```
-   ibmcloud ks cluster-config
-```
-4. Get the command to set the environment variable and download the Kubernetes configuration files. Substitute you cluster's name for *[YOUR CLUSTER]*
-```bash
-   # Note substitute your username e.g. user05 for  [YOUR_USERNAME]
-   ibmcloud ks cluster-config [YOUR_USERNAME]-cluster
-```
-5.  Set the KUBECONFIG environment variable. Copy the output from the previous command, paste it in your terminal and then run it as a command. The output from the previous command should look similar to the following.
-```
-   export KUBECONFIG=/...-cluster.yaml
-```
-6. Go to the folder where you cloned the Plants By WebSphere  app in the previous lab
+2. If following this lab as part of an IBM instructor led workshop, please follow these instructions to setup your workshop environment: https://gist.github.com/jzaccone/0cdc321e5dc8adb0dca98ca861284c01
+
+3. Go to the folder where you cloned the Plants By WebSphere  app in the previous lab
 ```
    cd app-modernization-plants-by-websphere-jee6
 ```   
 
 ###  Step 1: Set up the CI/CD pipeline
 
-In this section we will be connecting our cloned Git repo of [this app](https://github.com/djccarew/app-modernization-plants-by-websphere-jee6)  to set up a Continuous Integration/Continuous Deployment pipeline built with Jenkins. This pipeline contains 4main  steps as follows:
+In this section we will be connecting our cloned Git repo of [this app](https://github.com/djccarew/app-modernization-plants-by-websphere-jee6)  to set up a Continuous Integration/Continuous Deployment pipeline built with Jenkins. This pipeline contains 4 main steps as follows:
 
   | Stage                         | Purpose                                                                        |
   | ----------------------------- | ------------------------------------------------------------------------------ |
